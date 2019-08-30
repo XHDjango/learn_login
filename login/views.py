@@ -1,7 +1,16 @@
+import hashlib
+
 from django.shortcuts import render, redirect
 
-from . import models
 from . import forms
+from . import models
+
+
+def _hash_code(s, salt="login"):
+    h = hashlib.sha256()
+    s += salt
+    h.update(s.encode())
+    return h.hexdigest()
 
 
 def index(request):
@@ -26,7 +35,7 @@ def login(request):
             except:
                 return render(request, "login/login.html", locals())
 
-            if user.password == password:
+            if user.password == _hash_code(password):
                 request.session["is_login"] = True
                 request.session["user_id"] = user.id
                 request.session["user_name"] = user.name
@@ -67,7 +76,7 @@ def register(request):
 
             new_user = models.User()
             new_user.name = username
-            new_user.password = password1
+            new_user.password = _hash_code(password1)
             new_user.email = email
             new_user.sex = register_form.cleaned_data.get("sex")
             new_user.save()
