@@ -5,7 +5,9 @@ from . import forms
 
 
 def index(request):
-    return render(request, "login/index.html")
+    if request.session.get('is_login', None):
+        return render(request, "login/index.html")
+    return redirect('/login/')
 
 
 def login(request):
