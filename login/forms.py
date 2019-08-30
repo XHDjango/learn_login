@@ -5,6 +5,7 @@
 """
 
 from django import forms
+from captcha.fields import CaptchaField
 
 
 class UserForm(forms.Form):
@@ -13,3 +14,4 @@ class UserForm(forms.Form):
                                    attrs={'class': 'form-control', 'placeholder': "Username", 'autofocus': ''}))
     password = forms.CharField(label="密码", max_length=256,
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': "Password"}))
+    captcha = CaptchaField(label="验证码")

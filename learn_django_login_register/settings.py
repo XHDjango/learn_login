@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',    # 注册app
+    'captcha',  # captcha
 ]
 
 MIDDLEWARE = [
