@@ -6,6 +6,10 @@ def index(request):
 
 
 def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        return redirect("/index/")
     return render(request, "login/login.html")
 
 
