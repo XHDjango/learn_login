@@ -12,7 +12,7 @@ def login(request):
     if request.method == "POST":
         login_form = forms.UserForm(request.POST)
         message = "请检查填写的内容！"
-        
+
         if login_form.is_valid():
             username = request.POST.get("username")
             password = request.POST.get("password")
