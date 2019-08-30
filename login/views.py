@@ -9,6 +9,8 @@ def index(request):
 
 
 def login(request):
+    if request.session.get("is_login", None):
+        return redirect("/index/")  # 不允许重复登录
     if request.method == "POST":
         login_form = forms.UserForm(request.POST)
         message = "请检查填写的内容！"
@@ -23,6 +25,9 @@ def login(request):
                 return render(request, "login/login.html", locals())
 
             if user.password == password:
+                request.session['is_login'] = True
+                request.session['user_id'] = user.id
+                request.session['user_name'] = user.name
                 return redirect("/index/")
             return render(request, "login/login.html", locals())
 
@@ -37,4 +42,7 @@ def register(request):
 
 
 def logout(request):
+    if request.session.get('is_login', None):
+        request.session.flush()
+        return redirect("/login/")
     return redirect("/login/")
